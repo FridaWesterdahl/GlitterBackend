@@ -22,47 +22,35 @@ namespace GlitterBackend.Controllers
             _EFContext = context;
         }
 
-        private static List<User> users = new List<User>
-        {
-            new User
-            {
-                Id = 1,
-                Username = "FridaCool",
-                Email = "fridacool@gmail.com",
-                Password = "password",
-                PhotoFileName = "nopic.png"
-            }
-        };
-
-
         [HttpGet("getUsers")]
         public async Task<ActionResult<List<User>>> Get()
         {
-            return Ok(users);
+            return Ok(await _EFContext.Users.ToListAsync());
         }
 
         [HttpGet("getUserById/{id}")]
         public async Task<ActionResult<List<User>>> Get(int id)
         {
-            var user = users.Find(u => u.Id == id);
+            var user = await _EFContext.Users.FindAsync(id);
             if (user == null)
             {
                 return BadRequest("User not found");
             }
-            return Ok(users);
+            return Ok(user);
         }
 
         [HttpPost("createUser")]
         public async Task<ActionResult<List<User>>> Post(User user)
         {
-            users.Add(user);
-            return Ok(users);
+            _EFContext.Users.Add(user);
+            await _EFContext.SaveChangesAsync();
+            return Ok(await _EFContext.Users.ToListAsync());
         }
 
         [HttpPut("editUser")]
         public async Task<ActionResult<List<User>>> Put(User request)
         {
-            var user = users.Find(u => u.Id == request.Id);
+            var user = await _EFContext.Users.FindAsync(request.Id);
             if (user == null)
             {
                 return BadRequest("User not found");
@@ -73,21 +61,22 @@ namespace GlitterBackend.Controllers
             user.Password = request.Password;
             user.PhotoFileName = request.PhotoFileName;
 
-            users.Add(user);
-            return Ok(users);
+            await _EFContext.SaveChangesAsync();
+            return Ok(await _EFContext.Users.ToListAsync());
         }
 
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult<List<User>>> Delete(int id)
         {
-            var user = users.Find(u => u.Id == id);
+            var user = await _EFContext.Users.FindAsync(id);
             if (user == null)
             {
                 return BadRequest("User not found");
             }
 
-            users.Remove(user);
-            return Ok(users);
+            _EFContext.Users.Remove(user);
+            await _EFContext.SaveChangesAsync();
+            return Ok(await _EFContext.Users.ToListAsync());
         }
 
         [Route("SavePic")]

@@ -24,61 +24,58 @@ namespace GlitterBackend.Controllers
         }
 
         [HttpGet("getPosts")]
-        public async Task<IEnumerable> Get()
+        public async Task<ActionResult<List<Post>>> Get()
         {
-            var data = await _EFContext.Posts
-                .Select(p => new { p.Id, p.Content, p.Published, p.UserId })
-                .ToListAsync();
-
-            return data;
+            return Ok(await _EFContext.Posts.ToListAsync());
         }
-        [HttpPost("createPost")]
-        public JsonResult Post(Post post)
+
+        [HttpGet("getPostById/{id}")]
+        public async Task<ActionResult<List<Post>>> Get(int id)
         {
-            var date = DateTime.Now;
-            string q = @"insert into dbo.Posts values
-               ('" + post.Content + "', '" + date + "', '" + post.UserId + "')";
-            DataTable table = new DataTable();
-            string dataSource = _configuration.GetConnectionString("Connectionstring");
-            SqlDataReader myReader;
-
-            using (SqlConnection myConn = new SqlConnection(dataSource))
+            var post = await _EFContext.Posts.FindAsync(id);
+            if (post == null)
             {
-                myConn.Open();
-                using (SqlCommand myCommand = new SqlCommand(q, myConn))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-
-                    myReader.Close();
-                    myConn.Close();
-                }
+                return BadRequest("Post not found");
             }
-            return new JsonResult("Added successfully!");
+            return Ok(post);
+        }
+
+
+        [HttpPost("createPost")]
+        public async Task<ActionResult<List<Post>>> Post(Post post)
+        {
+            _EFContext.Posts.Add(post);
+            await _EFContext.SaveChangesAsync();
+            return Ok(await _EFContext.Users.ToListAsync());
+        }
+
+        [HttpPut("editPost/{id}")]
+        public async Task<ActionResult<List<User>>> Put(Post request)
+        {
+            var post = await _EFContext.Posts.FindAsync(request.Id);
+            if (post == null)
+            {
+                return BadRequest("Post not found");
+            }
+
+            post.Content = request.Content;
+
+            await _EFContext.SaveChangesAsync();
+            return Ok(await _EFContext.Users.ToListAsync());
         }
 
         [HttpDelete("delete/{id}")]
-        public JsonResult Delete(int id)
+        public async Task<ActionResult<List<Post>>> Delete(int id)
         {
-            string q = @"delete from dbo.Posts
-                where Id = " + id + "";
-            DataTable table = new DataTable();
-            string dataSource = _configuration.GetConnectionString("Connectionstring");
-            SqlDataReader myReader;
-
-            using (SqlConnection myConn = new SqlConnection(dataSource))
+            var post = await _EFContext.Posts.FindAsync(id);
+            if (post == null)
             {
-                myConn.Open();
-                using (SqlCommand myCommand = new SqlCommand(q, myConn))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-
-                    myReader.Close();
-                    myConn.Close();
-                }
+                return BadRequest("Post not found");
             }
-            return new JsonResult("Deleted successfully!");
+
+            _EFContext.Posts.Remove(post);
+            await _EFContext.SaveChangesAsync();
+            return Ok(await _EFContext.Posts.ToListAsync());
         }
     }
 }
