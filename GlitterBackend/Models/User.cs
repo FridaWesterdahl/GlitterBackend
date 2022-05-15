@@ -20,6 +20,7 @@ namespace GlitterBackend.Models
         [Column("Password")]
         [Required]
         public string Password { get; set; }
+        [Column("PhotoFileName")]
         public string PhotoFileName { get; set; }
 
         public virtual List<Post> Posts { get; set; }

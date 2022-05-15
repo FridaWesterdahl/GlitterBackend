@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Data;
-using GlitterBackend.Models;
+﻿using GlitterBackend.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
+using BCrypt.Net;
 
 namespace GlitterBackend.Controllers
 {
@@ -42,7 +39,16 @@ namespace GlitterBackend.Controllers
         [HttpPost("createUser")]
         public async Task<ActionResult<List<User>>> Post(User user)
         {
-            _EFContext.Users.Add(user);
+            var newUser = new User
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Email = user.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(user.Password),
+                PhotoFileName = user.PhotoFileName
+            };
+            
+            _EFContext.Users.Add(newUser);
             await _EFContext.SaveChangesAsync();
             return Ok(await _EFContext.Users.ToListAsync());
         }
@@ -58,7 +64,7 @@ namespace GlitterBackend.Controllers
 
             user.Username = request.Username;
             user.Email = request.Email;
-            user.Password = request.Password;
+            user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
             user.PhotoFileName = request.PhotoFileName;
 
             await _EFContext.SaveChangesAsync();

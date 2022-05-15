@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Data;
 using GlitterBackend.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 
 namespace GlitterBackend.Controllers
 {

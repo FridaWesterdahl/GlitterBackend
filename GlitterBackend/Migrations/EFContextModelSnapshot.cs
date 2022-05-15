@@ -52,7 +52,7 @@ namespace GlitterBackend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("GlitterBackend.Post", b =>
@@ -80,7 +80,7 @@ namespace GlitterBackend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("GlitterBackend.Post", b =>
