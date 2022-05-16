@@ -1,3 +1,4 @@
+using GlitterBackend;
 using GlitterBackend.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,8 @@ builder.Services.AddDbContext<EFContext>(options => options.UseSqlServer(
 
 var app = builder.Build();
 
+app.UseMiddleware<Middleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -30,6 +33,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
 
 app.UseCors(x => x
     .AllowAnyOrigin()

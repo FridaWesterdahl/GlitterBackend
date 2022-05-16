@@ -31,7 +31,7 @@ namespace GlitterBackend.Controllers
             var user = await _EFContext.Users.FindAsync(id);
             if (user == null)
             {
-                return BadRequest("User not found");
+                return NotFound("User not found");
             }
             return Ok(user);
         }
@@ -59,7 +59,7 @@ namespace GlitterBackend.Controllers
             var user = await _EFContext.Users.FindAsync(request.Id);
             if (user == null)
             {
-                return BadRequest("User not found");
+                return NotFound("User not found");
             }
 
             user.Username = request.Username;
@@ -77,7 +77,7 @@ namespace GlitterBackend.Controllers
             var user = await _EFContext.Users.FindAsync(id);
             if (user == null)
             {
-                return BadRequest("User not found");
+                return NotFound("User not found");
             }
 
             _EFContext.Users.Remove(user);

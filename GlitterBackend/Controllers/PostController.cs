@@ -31,7 +31,7 @@ namespace GlitterBackend.Controllers
             var post = await _EFContext.Posts.FindAsync(id);
             if (post == null)
             {
-                return BadRequest("Post not found");
+                return NotFound("Post not found");
             }
             return Ok(post);
         }
@@ -42,7 +42,7 @@ namespace GlitterBackend.Controllers
         {
             _EFContext.Posts.Add(post);
             await _EFContext.SaveChangesAsync();
-            return Ok(await _EFContext.Users.ToListAsync());
+            return Ok(await _EFContext.Posts.ToListAsync());
         }
 
         [HttpPut("editPost/{id}")]
@@ -51,13 +51,13 @@ namespace GlitterBackend.Controllers
             var post = await _EFContext.Posts.FindAsync(request.Id);
             if (post == null)
             {
-                return BadRequest("Post not found");
+                return NotFound("Post not found");
             }
 
             post.Content = request.Content;
 
             await _EFContext.SaveChangesAsync();
-            return Ok(await _EFContext.Users.ToListAsync());
+            return Ok(await _EFContext.Posts.ToListAsync());
         }
 
         [HttpDelete("delete/{id}")]
@@ -66,7 +66,7 @@ namespace GlitterBackend.Controllers
             var post = await _EFContext.Posts.FindAsync(id);
             if (post == null)
             {
-                return BadRequest("Post not found");
+                return NotFound("Post not found");
             }
 
             _EFContext.Posts.Remove(post);
