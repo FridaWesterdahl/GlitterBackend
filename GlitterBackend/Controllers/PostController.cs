@@ -1,5 +1,7 @@
+using System.Data;
 using GlitterBackend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace GlitterBackend.Controllers
@@ -19,11 +21,32 @@ namespace GlitterBackend.Controllers
             _EFContext = context;
         }
 
+
         [HttpGet("getPosts")]
-        public async Task<ActionResult<List<Post>>> Get()
+        public IQueryable<Object> Get()
         {
-            return Ok(await _EFContext.Posts.ToListAsync());
+            var q =
+                (from p in _EFContext.Posts
+                 join u in _EFContext.Users
+                 on p.UserId equals u.Id
+                 select new
+                 {
+                     PostId = p.Id,
+                     Content = p.Content,
+                     Published = p.Published,
+                     User = u.Username
+
+                 });
+            
+            return (q);
         }
+           
+        //[HttpGet("getPosts")]
+        //public async Task<ActionResult<List<Post>>> Get()
+        //{
+        //    return Ok(await _EFContext.Posts.ToListAsync());
+
+        //}
 
         [HttpGet("getPostById/{id}")]
         public async Task<ActionResult<List<Post>>> Get(int id)
