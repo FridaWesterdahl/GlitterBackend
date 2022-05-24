@@ -39,6 +39,12 @@ namespace GlitterBackend.Controllers
         [HttpPost("createUser")]
         public async Task<ActionResult<List<User>>> Post(User user)
         {
+            if (await _EFContext.Users.AnyAsync(x => x.Username == user.Username))
+            {
+                ModelState.AddModelError("username", "Username is already taken.");
+                return ValidationProblem();
+            }
+
             var newUser = new User
             {
                 Id = user.Id,
@@ -53,7 +59,7 @@ namespace GlitterBackend.Controllers
             return Ok(await _EFContext.Users.ToListAsync());
         }
 
-        [HttpPut("editUser")]
+        [HttpPut("editUser/{id}")]
         public async Task<ActionResult<List<User>>> Put(User request)
         {
             var user = await _EFContext.Users.FindAsync(request.Id);
@@ -87,7 +93,7 @@ namespace GlitterBackend.Controllers
 
         [Route("SavePic")]
         [HttpPost]
-        public JsonResult SavePic()
+        public JsonResult SavePic(User user)
         {
             try
             {
@@ -100,6 +106,8 @@ namespace GlitterBackend.Controllers
                 {
                     postedPic.CopyTo(stream);
                 }
+
+                user.PhotoFileName = filename;
 
                 return new JsonResult(filename);
             }

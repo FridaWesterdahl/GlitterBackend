@@ -37,10 +37,10 @@ namespace GlitterBackend.Controllers
                      User = u.Username
 
                  });
-            
+
             return (q);
         }
-           
+
         //[HttpGet("getPosts")]
         //public async Task<ActionResult<List<Post>>> Get()
         //{
@@ -61,7 +61,7 @@ namespace GlitterBackend.Controllers
 
 
         [HttpPost("createPost")]
-        public async Task<ActionResult<List<Post>>> Post(Post post)
+        public async Task<ActionResult<List<Post>>> Post([FromBody] Post post)
         {
             _EFContext.Posts.Add(post);
             await _EFContext.SaveChangesAsync();
@@ -69,9 +69,9 @@ namespace GlitterBackend.Controllers
         }
 
         [HttpPut("editPost/{id}")]
-        public async Task<ActionResult<List<User>>> Put(Post request)
+        public async Task<ActionResult<List<User>>> Put(Post request, int id)
         {
-            var post = await _EFContext.Posts.FindAsync(request.Id);
+            var post = await _EFContext.Posts.FindAsync(id);
             if (post == null)
             {
                 return NotFound("Post not found");
