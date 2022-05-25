@@ -16,6 +16,7 @@ namespace GlitterBackend.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly EFContext _EFContext;
+
         public AuthController(IConfiguration configuration, EFContext context)
         {
             _configuration = configuration;
@@ -26,15 +27,15 @@ namespace GlitterBackend.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] AuthUser authUser)
         {
-            var resp = Authenticate(authUser);
+            var user = Authenticate(authUser);
 
-            if (resp != null)
+            if (user != null)
             {
-                var token = Generate(resp);
+                var token = Generate(user);
                 return Ok(token);
             }
 
-            return NotFound("User not found");
+            return NotFound("User not found with that username and password.");
         }
 
         private string Generate(User user)
@@ -57,19 +58,18 @@ namespace GlitterBackend.Controllers
 
         private User Authenticate(AuthUser authUser)
         {
+            var user = _EFContext.Users.SingleOrDefault(x => x.Username == authUser.Username);
+
+            bool verifyPassword = BCrypt.Net.BCrypt.Verify(authUser.Password, user.Password);
             
-            var hashedPassword = user.Password;
-            var verifiedPassword = BCrypt.Net.BCrypt.Verify(hashedPassword, authUser.Password);
 
-            var resp = _EFContext.Users.FirstOrDefault(x => x.Username.ToLower() == 
-            authUser.Username.ToLower() && verifiedPassword);
-
-            if (resp != null)
+            if (verifyPassword)
             {
-                return resp;
+                return user;
             }
 
             return null;
         }
+
     }
 }
