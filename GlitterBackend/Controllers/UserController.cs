@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BCrypt.Net;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GlitterBackend.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -19,6 +22,19 @@ namespace GlitterBackend.Controllers
             _EFContext = context;
         }
 
+        [AllowAnonymous]
+        [HttpGet("getCurrentUser")]
+        public IQueryable<Object> Get(string username)
+        {
+            var q =
+                (from u in _EFContext.Users
+                 where u.Username == username
+                 select u);
+
+            return (q);
+        }
+
+        [AllowAnonymous]
         [HttpGet("getUsers")]
         public async Task<ActionResult<List<User>>> Get()
         {
@@ -36,6 +52,7 @@ namespace GlitterBackend.Controllers
             return Ok(user);
         }
 
+        [AllowAnonymous]
         [HttpPost("createUser")]
         public async Task<ActionResult<List<User>>> Post(User user)
         {
@@ -56,7 +73,7 @@ namespace GlitterBackend.Controllers
             
             _EFContext.Users.Add(newUser);
             await _EFContext.SaveChangesAsync();
-            return Ok(await _EFContext.Users.ToListAsync());
+            return Ok(newUser);
         }
 
         [HttpPut("editUser/{id}")]

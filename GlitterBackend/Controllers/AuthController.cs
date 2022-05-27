@@ -60,15 +60,15 @@ namespace GlitterBackend.Controllers
         {
             var user = _EFContext.Users.SingleOrDefault(x => x.Username == authUser.Username);
 
-            bool verifyPassword = BCrypt.Net.BCrypt.Verify(authUser.Password, user.Password);
-            
-
-            if (verifyPassword)
+            if (BCrypt.Net.BCrypt.Verify(authUser.Password, user.Password))
             {
                 return user;
             }
+            else
+            {
+                return null;
+            }
 
-            return null;
         }
 
     }

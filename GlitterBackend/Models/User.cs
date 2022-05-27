@@ -23,6 +23,6 @@ namespace GlitterBackend.Models
         [Column("PhotoFileName")]
         public string PhotoFileName { get; set; }
 
-        //public virtual List<Post> Posts { get; set; }
+        public virtual List<Post>? Posts { get; set; }
     }
 }

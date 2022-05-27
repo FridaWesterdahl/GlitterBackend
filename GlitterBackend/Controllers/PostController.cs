@@ -1,11 +1,14 @@
 using System.Data;
 using GlitterBackend.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace GlitterBackend.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class PostController : Controller
