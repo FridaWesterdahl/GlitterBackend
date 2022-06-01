@@ -44,13 +44,6 @@ namespace GlitterBackend.Controllers
             return (q);
         }
 
-        //[HttpGet("getPosts")]
-        //public async Task<ActionResult<List<Post>>> Get()
-        //{
-        //    return Ok(await _EFContext.Posts.ToListAsync());
-
-        //}
-
         [HttpGet("getPostById/{id}")]
         public async Task<ActionResult<List<Post>>> Get(int id)
         {
@@ -98,6 +91,19 @@ namespace GlitterBackend.Controllers
             _EFContext.Posts.Remove(post);
             await _EFContext.SaveChangesAsync();
             return Ok(await _EFContext.Posts.ToListAsync());
+        }
+
+        [HttpDelete("deleteUsersPosts")]
+        public IQueryable<Object> Delete(User user)
+        {
+            var q =
+                (from p in _EFContext.Posts
+                 where p.UserId == user.Id
+                 select p);
+
+            _EFContext.Posts.Remove((Post)q);
+            _EFContext.SaveChanges();
+            return (IQueryable<object>)_EFContext.Posts.ToList();
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using BCrypt.Net;
+using Microsoft.EntityFrameworkCore;
 
 namespace GlitterBackend.Controllers
 {
@@ -59,6 +60,10 @@ namespace GlitterBackend.Controllers
         private User Authenticate(AuthUser authUser)
         {
             var user = _EFContext.Users.SingleOrDefault(x => x.Username == authUser.Username);
+            if (user == null)
+            {
+                return null;
+            }
 
             if (BCrypt.Net.BCrypt.Verify(authUser.Password, user.Password))
             {

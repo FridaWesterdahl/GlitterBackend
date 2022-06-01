@@ -67,8 +67,7 @@ namespace GlitterBackend.Controllers
                 Id = user.Id,
                 Username = user.Username,
                 Email = user.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(user.Password),
-                PhotoFileName = user.PhotoFileName
+                Password = BCrypt.Net.BCrypt.HashPassword(user.Password)
             };
             
             _EFContext.Users.Add(newUser);
@@ -85,10 +84,15 @@ namespace GlitterBackend.Controllers
                 return NotFound("User not found");
             }
 
+            if (await _EFContext.Users.AnyAsync(x => x.Username == user.Username))
+            {
+                ModelState.AddModelError("username", "Username is already taken.");
+                return ValidationProblem();
+            }
+
             user.Username = request.Username;
             user.Email = request.Email;
             user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            user.PhotoFileName = request.PhotoFileName;
 
             await _EFContext.SaveChangesAsync();
             return Ok(await _EFContext.Users.ToListAsync());
@@ -108,30 +112,5 @@ namespace GlitterBackend.Controllers
             return Ok(await _EFContext.Users.ToListAsync());
         }
 
-        [Route("SavePic")]
-        [HttpPost]
-        public JsonResult SavePic(User user)
-        {
-            try
-            {
-                var httpRequest = Request.Form;
-                var postedPic = httpRequest.Files[0];
-                string filename = postedPic.FileName;
-                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
-
-                using (var stream = new FileStream(physicalPath, FileMode.Create))
-                {
-                    postedPic.CopyTo(stream);
-                }
-
-                user.PhotoFileName = filename;
-
-                return new JsonResult(filename);
-            }
-            catch (Exception)
-            {
-                return new JsonResult("nopic.png");
-            }
-        }
     }   
 }
