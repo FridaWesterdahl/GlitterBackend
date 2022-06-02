@@ -83,19 +83,37 @@ namespace GlitterBackend.Controllers
             {
                 return NotFound("User not found");
             }
+ 
+            user.Username = request.Username;
+            user.Email = request.Email;
+            user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
+                
+            await _EFContext.SaveChangesAsync();
+            return Ok(await _EFContext.Users.ToListAsync()); 
+            
+        }
 
-            if (await _EFContext.Users.AnyAsync(x => x.Username == user.Username))
+        [HttpPut("editUsername/{id}")]
+        public async Task<ActionResult<List<User>>> PutUsername(User request)
+        {
+             var user = await _EFContext.Users.FindAsync(request.Id);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            if (await _EFContext.Users.AnyAsync(user => user.Username == request.Username))
             {
                 ModelState.AddModelError("username", "Username is already taken.");
                 return ValidationProblem();
             }
+            else
+            {
+                user.Username = request.Username;
 
-            user.Username = request.Username;
-            user.Email = request.Email;
-            user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
-
-            await _EFContext.SaveChangesAsync();
-            return Ok(await _EFContext.Users.ToListAsync());
+                await _EFContext.SaveChangesAsync();
+                return Ok(await _EFContext.Users.ToListAsync());
+            }
         }
 
         [HttpDelete("delete/{id}")]
