@@ -189,35 +189,35 @@ function User() {
 
                     <div className='buttons'>
                         <div className='edit'>
-                            <button onClick={handleUsernameClick}>Edit</button>
+                            <button className='edit-btn' onClick={handleUsernameClick}>Edit</button>
                             <input className={editUsernameClick ? "" : "hidden"} type="text" ref={usernameInput}
                                 placeholder='3-20 letters'
                                 onChange={(e) => setUsername(e.target.value)} minLength="3" maxLength="20" required></input>
-                            <button className={editUsernameClick ? "" : "hidden"} onClick={editUsername}>Submit</button>
+                            <button className={editUsernameClick ? "submit" : "hidden"} onClick={editUsername}>Submit</button>
                         </div>
 
                         <div className='edit'>
-                            <button onClick={handleEmailClick}>Edit</button>
+                            <button className='edit-btn' onClick={handleEmailClick}>Edit</button>
                             <input className={editEmailClick ? "" : "hidden"} type="email" ref={emailInput}
                                 placeholder='example@home.com'
                                 onChange={(e) => setEmail(e.target.value)} required></input>
-                            <button className={editEmailClick ? "" : "hidden"} onClick={editEmail}>Submit</button>
+                            <button className={editEmailClick ? "submit" : "hidden"} onClick={editEmail}>Submit</button>
                         </div>
 
                         <div className='edit'>
-                            <button onClick={handlePasswordClick}>Edit</button>
+                            <button className='edit-btn' onClick={handlePasswordClick}>Edit</button>
                             <input className={editPasswordClick ? "" : "hidden"} id="reg-passw" type="password" ref={passwordInput}
                                 onChange={(e) => setPassword(e.target.value)} minLength={1} required></input>
-                            <button className={editPasswordClick ? "" : "hidden"} onClick={editPassword}>Submit</button>
+                            <button className={editPasswordClick ? "submit" : "hidden"} onClick={editPassword}>Submit</button>
                         </div>
                     </div>
 
                     <a href="http://localhost:3000"><button onClick={handleLogOut}>Log out</button></a>
-                    <button onClick={() => setDeleteClick(!deleteClick)}>Delete account</button>
+                    <button className='delete-btn' onClick={() => setDeleteClick(!deleteClick)}>Delete account</button>
                     <div className={deleteClick ? 'delete-account' : 'hidden'}>
                         <p>Are you sure you want do delete your account?</p>
                         <a href='http://localhost:3000'><button onClick={deleteAccount}>Yes</button></a>
-                        <button onClick={() => setDeleteClick(deleteClick)}>No</button>
+                        <button onClick={() => setDeleteClick(!deleteClick)}>No</button>
                     </div>
                 </div>
 

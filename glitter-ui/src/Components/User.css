@@ -99,6 +99,42 @@ li {
     margin: 25px;
 }
 
-.buttons button {
-    /* width: 20%; */
+.edit-btn,
+.submit,
+.delete-btn {
+    background-color: rgb(223, 158, 73);
+    border: none;
+    border-radius: 8px;
+    width: 20%;
+    padding: 2px 5px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+}
+
+.edit-btn:hover,
+.submit:hover {
+    opacity: 60%;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.submit,
+.delete-btn {
+    background-color: rgb(231, 92, 27);
+}
+
+.delete-btn {
+    width: 40%;
+    opacity: 30%;
+    margin: auto;
+
+}
+
+.delete-btn:hover {
+    opacity: 90%;
+    cursor: pointer;
+}
+
+.delete-account {
+    margin: auto;
 }
