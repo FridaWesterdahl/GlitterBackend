@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:7097",
+      "applicationUrl": "http://localhost:7097; https://glitter.azurewebsites.net/",
       "sslPort": 44309
     }
   },
@@ -14,7 +14,7 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7028;http://localhost:5028",
+      "applicationUrl": "https://localhost:7028;http://localhost:5028;https://glitter.azurewebsites.net/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
