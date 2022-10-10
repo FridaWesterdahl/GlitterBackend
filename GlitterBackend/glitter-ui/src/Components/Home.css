@@ -1,0 +1,188 @@
+.login-container {
+    background-color: rgba(250, 245, 245, 0.452);
+    width: 30%;
+    margin: auto;
+    padding: 10px 0px;
+    border-radius: 10px;
+}
+
+.login-container img {
+    width: 30%;
+}
+
+.login-container h2 {
+    margin: 20px;
+    font-size: 120%;
+}
+
+.user-login {
+    margin: 10px 20px;
+}
+
+.user-login p,
+.user-reg p {
+    margin: 2px 0px;
+}
+
+.user-reg {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px 5px 10px 5px;
+}
+
+.user-login input {
+    background-color: rgba(240, 248, 255, 0.788);
+    border-radius: 8px;
+    padding: 5px;
+    border: none;
+    width: 70%;
+}
+
+.login-container button {
+    border-radius: 8px;
+    border-color: rgba(8, 8, 8, 0.527);
+    border-width: 1px;
+    text-transform: uppercase;
+    background-color: black;
+    color: white;
+}
+
+.login-container button:hover {
+    cursor: pointer;
+    opacity: 60%;
+    font-size: 15px;
+    font-weight: 600;
+    background-image: linear-gradient(to bottom right, rgba(236, 104, 43, 0.993), rgba(223, 130, 203, 0.596));
+}
+
+
+.user-reg button {
+    background-color: rgba(236, 104, 43, 0.897);
+    color: black;
+    border-color: rgba(8, 8, 8, 0.116);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    display: grid;
+    grid-template-areas: "form preview submit";
+}
+
+.form {
+    grid-area: form;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input {
+    border-radius: 8px;
+    width: 60%;
+    border: 1px solid black;
+}
+
+input[type="file"i] {
+    border-radius: 0;
+    border: none;
+}
+
+input:invalid {
+    border: 1px solid red;
+}
+
+#passw-error {
+    color: red;
+}
+
+.preview-user,
+.def-preview-user {
+    grid-area: preview;
+    background-color: rgba(228, 145, 210, 0.274);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+    margin: 60px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.preview-user img,
+.def-preview-user img {
+    width: 70%;
+    margin: auto;
+}
+
+.preview-user p,
+.def-preview-user p {
+    margin: 10px 0px;
+}
+
+.preview-user button {
+    width: 70%;
+    margin: 0px auto 10px auto;
+    font-size: 10px;
+    border-radius: 0px;
+    background-color: rgba(235, 151, 54, 0.397);
+}
+
+.preview-user button:hover {
+    font-size: 10px;
+}
+
+#register-sub {
+    grid-area: submit;
+    width: 40%;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto 0px auto;
+}

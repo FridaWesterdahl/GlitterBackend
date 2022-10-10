@@ -38,7 +38,7 @@ builder.Services.AddCors(x =>
 {
     x.AddPolicy("CorsPolicy", policy =>
     { policy
-        .WithOrigins("http://localhost:3000")
+        .WithOrigins("https://glitter.azurewebsites.net/")
         .AllowAnyHeader()
         .AllowAnyMethod();
     });

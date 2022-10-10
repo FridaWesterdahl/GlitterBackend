@@ -1,0 +1,140 @@
+.main-profile {
+    width: 100%;
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-areas:
+        "menu profile"
+        "menu profile";
+}
+
+.hidden {
+    display: none;
+}
+
+li {
+    list-style: none;
+}
+
+.posts h1 {
+    margin: 100px 0px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.navbar h2 {
+    /* border-color: rgba(224, 45, 200, 0.507);
+    border-style: outset;
+    border-width: 1px; */
+    background-color: rgba(231, 178, 64, 0.295);
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+
+.navbar {
+    grid-area: menu;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar li {
+    margin: 20px 0px;
+    padding: 5px 0px;
+    text-align: left;
+    border-radius: 8px;
+    background-image: linear-gradient(to right, rgba(240, 202, 76, 0.993), rgba(223, 130, 203, 0.596));
+}
+
+#posts-link {
+    width: 110%;
+}
+
+#user-link {
+    width: 120%;
+}
+
+
+.navbar a {
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+    margin-left: 50px;
+    letter-spacing: 10px;
+}
+
+.navbar a:hover {
+    font-weight: 600;
+    opacity: 60%;
+    animation: opac 2s;
+
+}
+
+.profile {
+    grid-area: profile;
+    display: grid;
+    grid-template-areas: "value buttons";
+    width: 70%;
+    margin: auto;
+    background-color: rgba(240, 221, 192, 0.808);
+    padding: 10px;
+    outline: 1px solid rgba(199, 103, 178, 0.568);
+    border-radius: 8px;
+}
+
+.value {
+    grid-area: value;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.buttons {
+    grid-area: buttons;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit {
+    display: flex;
+    flex-direction: row;
+    margin: 25px;
+}
+
+.edit-btn,
+.submit,
+.delete-btn {
+    background-color: rgb(223, 158, 73);
+    border: none;
+    border-radius: 8px;
+    width: 20%;
+    padding: 2px 5px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+}
+
+.edit-btn:hover,
+.submit:hover {
+    opacity: 60%;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.submit,
+.delete-btn {
+    background-color: rgb(231, 92, 27);
+}
+
+.delete-btn {
+    width: 40%;
+    opacity: 30%;
+    margin: auto;
+
+}
+
+.delete-btn:hover {
+    opacity: 90%;
+    cursor: pointer;
+}
+
+.delete-account {
+    margin: auto;
+}
